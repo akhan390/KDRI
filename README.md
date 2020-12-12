@@ -13,12 +13,15 @@
 
 ## Problem Statement
 
-
+The aim of this project is to create a new and improved Kidney Donor Risk Index by:
+ - Eliminating the race-adjustment for Black kidney donors
+ - Redefining graft failure
+ - Utilizing a combination of novel machine learning techniques to isolate important predictive variables and improve predictive accuracy
 
 
 
 ## Background
-
+The Kidney Donor Risk Index is a prognostic algorithm developed by Rao et al. (2009) used by physicians to aid in making decisions regarding kidney allocation.<sup>[1](https://journals.lww.com/transplantjournal/Fulltext/2009/07270/A_Comprehensive_Risk_Quantification_Score_for.13.aspx)</sup> 
 
 
 
@@ -28,7 +31,6 @@
 
 
 ## Data
-
 
 As per the Organ Transplantation and Procurement Network (OPTN), "STAR (Standard Transplant Analysis and Research) files are limited datasets that contain patient-level information about transplant recipients, deceased and living donors, and waiting list candidates back to 10/1/1987." 
 
