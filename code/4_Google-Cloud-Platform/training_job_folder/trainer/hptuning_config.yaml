@@ -1,0 +1,27 @@
+trainingInput:
+  hyperparameters:
+    goal: MAXIMIZE
+    maxTrials: 12
+    maxParallelTrials: 2
+    hyperparameterMetricTag: concordance_index
+    enableTrialEarlyStopping: TRUE
+    params:
+    - parameterName: n_estimators
+      type: DISCRETE
+      discreteValues: [
+          100,
+          200,
+          300]
+    - parameterName: min_samples_split
+      type: DISCRETE
+      discreteValues: [
+          0.05,
+          0.10
+      ]
+    - parameterName: min_samples_leaf
+      type: DISCRETE
+      discreteValues: [
+          0.05,
+          0.10
+      ]
+  
