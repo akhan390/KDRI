@@ -13,7 +13,8 @@
       - [DeepSurv](#DeepSurv)
     - [Model Training](#Model-Training)
     - [Feature Importance](#Feature-Importance)
-- [Conclusions and Recommendations](#Conclusions-and-Recommendations)
+    - [Model Performance](#Model-Performance)
+- [Conclusions and Future Directions](#Conclusions-and-Future-Directions)
 
 
 
@@ -77,19 +78,23 @@ Numeric and categorical features were separated into distinct dataframes for ini
 #### Models
 
 ##### Random Survival Forests
-Random Survival Forests was chosen over the original Cox regression model for the ability to avoid the proportional hazards constraint while maintaining interpretability.<sup>[7](https://humboldt-wi.github.io/blog/research/information_systems_1920/group2_survivalanalysis/#rsf)</sup> The model computes a random forest using the log-rank test as the splitting criterion. The cumulative hazard of the leaf nodes in each tree are calculated and averaged in the following ensemble.<sup>[7](https://humboldt-wi.github.io/blog/research/information_systems_1920/group2_survivalanalysis/#rsf)</sup> The `scikit-survival` package  created by Sebastian Pölsterl was used for Random Survival Forest modeling and model evaluation.<sup>[8](https://scikit-survival.readthedocs.io/en/latest/)</sup>  
+Random Survival Forests was chosen over the original Cox regression model for the ability to avoid the proportional hazards constraint while maintaining interpretability.<sup>[7](https://humboldt-wi.github.io/blog/research/information_systems_1920/group2_survivalanalysis/#rsf)</sup> The model computes a random forest using the log-rank test as the splitting criterion. The cumulative hazard of the leaf nodes in each tree are calculated and averaged in the following ensemble.<sup>[7](https://humboldt-wi.github.io/blog/research/information_systems_1920/group2_survivalanalysis/#rsf)</sup> The `scikit-survival` package was used for Random Survival Forest modeling and model evaluation.<sup>[8](https://scikit-survival.readthedocs.io/en/latest/)</sup>  
 
 ##### DeepSurv
 
-DeepSurv is a Cox Proportional Hazards deep neural network.<sup>[9](https://bmcmedresmethodol.biomedcentral.com/articles/10.1186/s12874-018-0482-1)</sup> It works by estimating each individual’s effect on their hazard rates with respect to parametrized weights of the network<sup>[7](https://humboldt-wi.github.io/blog/research/information_systems_1920/group2_survivalanalysis/#rsf)</sup>. After determination of Random Survival Forests feature weights, features with non-zero weights were eliminated and the 33 remaining features were used in a DeepSurv model to attempt to improve predictive accuracy. The `CoxPH` method from the `Pycox` package created by Haavard Kvamme was utilized for DeepSurv modeling and evaluation.<sup>[10](https://github.com/havakv/pycox#references)</sup>
+DeepSurv is a Cox Proportional Hazards deep neural network.<sup>[9](https://bmcmedresmethodol.biomedcentral.com/articles/10.1186/s12874-018-0482-1)</sup> It works by estimating each individual’s effect on their hazard rates with respect to parametrized weights of the network<sup>[7](https://humboldt-wi.github.io/blog/research/information_systems_1920/group2_survivalanalysis/#rsf)</sup>. After determination of Random Survival Forests feature weights, features with non-zero weights were eliminated and the 33 remaining features were used in a DeepSurv model to attempt to improve predictive accuracy. The `CoxPH` method from the `Pycox` package was used for DeepSurv modeling and evaluation.<sup>[10](https://github.com/havakv/pycox#references)</sup>
 
 
 #### Model Training
-Random Survival Forests training and hyperparameter tuning was performed on Google AI Platform using the set of 100 features selected by initial statistical analysis.
+Random Survival Forests training and hyperparameter tuning was performed on Google AI Platform using the set of 100 features selected by initial statistical analysis. Tuning parameters included `n_estimators` = {100, 200, 300}, `min_sample_split` = {0.05, 0.1}, `min_samples_leaf` = {0.05, 0.1}.
 
+The hyperparameter optimization metric was Harrell's Concordance Index. The optimal concordance index value was 0.621 with parameters of `n_estimators` = 300, `min_sample_split` = 0.05, and `min_samples_leaf` = 0.05.
 
 #### Feature Importance
 Feature importance was obtained using the `eli5` `PermutationImportance` method, as outlined in the `scikit-survival` Random Survival Forests documentation.<sup>[11](https://scikit-survival.readthedocs.io/en/latest/user_guide/random-survival-forest.html)</sup>
 
 
-## Conclusions and Recommendations
+#### Model Performance
+
+
+## Conclusions and Future Directions
