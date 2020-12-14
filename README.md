@@ -7,6 +7,10 @@
     - [Limitations of the Original Model](#Limitations-of-the-Original-Model)
 - [Data](#Data)
 - [Executive Summary](#Executive-Summary)
+    - [Methods](#Methods)
+    - [Models](#Model)
+    - [Model Training](#Model-Training)
+    - [Feature Importance](#Feature-Importance)
 - [Conclusions and Recommendations](#Conclusions-and-Recommendations)
 
 
@@ -57,24 +61,25 @@ In accordance with the OPTN Data Use Agreement, the de-identified patient-level 
 
 
 
-
-
-
 ## Executive Summary
 
-### Packages & Documentation
 
-### Modeling
+#### Methods
+Using SQLite, most recent transplant follow-up records were isolated from the Kidney Follow-Up data table for each transplant record ID. The Kidney/Pancreas data table was filtered sequentially using the same exclusion criteria used in the original model.<sup>[1](https://journals.lww.com/transplantjournal/Fulltext/2009/07270/A_Comprehensive_Risk_Quantification_Score_for.13.aspx)</sup> Kidney/Pancreas, Deceased Donor, and Kidney Follow-Up data tables were then left-joined on Transplant ID from the Kidney/Pancreas data table, and the joined table was filtered for transplant dates occurring in or after 2005. Duplicate transplant records were removed using Python after exporting the data table as a csv.
 
+Data cleaning and initial feature selection was performed in python using `pandas`, `scikit-learn`, `numpy`, and `imblearn`. Manual removal of features pertaining to pancreatic transplants, those unavailable prior to transplant, those pertaining to or utilizing race/ethnicity (eg; GFR), and those leaking graft survival information was performed. The dataframe was then filtered for features containing ≤ 10% null values. The final dataframe contained 102,480 transplant records.
 
-### Custom Model Training with Google AI Platform
-
-
-### Feature Importances
+Numeric and categorical features were separated into distinct dataframes for initial feature selection. `RandomUnderSampler` was used to balance the graft failure and survival classes in order to perform ANOVA and chi-square tests on numeric and categorical features, respectively. The top 30 of 38 numeric and top 70 of 1677 features using `SelectKBest` were utilized for model tuning an further feature selection using a [Random Survival Forest](https://www.semanticscholar.org/paper/Random-survival-forests-Ishwaran-Kogalur/9ee2d6a8de063e2621eebc620b9d9d3d8a380374) model.
 
 
+#### Models
 
 
+
+#### Model Training
+
+
+#### Feature Importance
 
 
 ## Conclusions and Recommendations
