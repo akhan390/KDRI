@@ -77,11 +77,11 @@ Numeric and categorical features were separated into distinct dataframes for ini
 #### Models
 
 ##### Random Survival Forests
-Random Survival Forests was chosen over the original Cox regression model for the ability to avoid the proportional hazards constraint while maintaining interpretability.<sup>[7](https://humboldt-wi.github.io/blog/research/information_systems_1920/group2_survivalanalysis/#rsf)</sup> The model computes a random forest using the log-rank test as the splitting criterion. The cumulative hazard of the leaf nodes in each tree are calculated and averaged in the following ensemble.<sup>[7](https://humboldt-wi.github.io/blog/research/information_systems_1920/group2_survivalanalysis/#rsf)</sup>
+Random Survival Forests was chosen over the original Cox regression model for the ability to avoid the proportional hazards constraint while maintaining interpretability.<sup>[7](https://humboldt-wi.github.io/blog/research/information_systems_1920/group2_survivalanalysis/#rsf)</sup> The model computes a random forest using the log-rank test as the splitting criterion. The cumulative hazard of the leaf nodes in each tree are calculated and averaged in the following ensemble.<sup>[7](https://humboldt-wi.github.io/blog/research/information_systems_1920/group2_survivalanalysis/#rsf)</sup> The `scikit-survival` package  created by Sebastian Pölsterl was used for Random Survival Forest modeling and model evaluation.<sup>[8](https://scikit-survival.readthedocs.io/en/latest/)</sup>  
 
 ##### DeepSurv
 
-DeepSurv is a Cox Proportional Hazards deep neural network.<sup>[8](https://bmcmedresmethodol.biomedcentral.com/articles/10.1186/s12874-018-0482-1)</sup> It works by estimating each individual’s effect on their hazard rates with respect to parametrized weights of the network<sup>[7](https://humboldt-wi.github.io/blog/research/information_systems_1920/group2_survivalanalysis/#rsf)</sup>. After feature importances were determined from Random Survival Forests using `PermutationImportance`, features with non-zero weights were eliminated and the 33 remaining features were used in a DeepSurv model to attempt to improve predictive accuracy.
+DeepSurv is a Cox Proportional Hazards deep neural network.<sup>[9](https://bmcmedresmethodol.biomedcentral.com/articles/10.1186/s12874-018-0482-1)</sup> It works by estimating each individual’s effect on their hazard rates with respect to parametrized weights of the network<sup>[7](https://humboldt-wi.github.io/blog/research/information_systems_1920/group2_survivalanalysis/#rsf)</sup>. After determination of Random Survival Forests feature weights, features with non-zero weights were eliminated and the 33 remaining features were used in a DeepSurv model to attempt to improve predictive accuracy. The `CoxPH` method from the `Pycox` package created by Haavard Kvamme was utilized for DeepSurv modeling and evaluation.<sup>[10](https://github.com/havakv/pycox#references)</sup>
 
 
 #### Model Training
@@ -89,7 +89,7 @@ Random Survival Forests training and hyperparameter tuning was performed on Goog
 
 
 #### Feature Importance
-The `PermutationImportance`
+Feature importance was obtained using the `eli5` `PermutationImportance` method, as outlined in the `scikit-survival` Random Survival Forests documentation.<sup>[11](https://scikit-survival.readthedocs.io/en/latest/user_guide/random-survival-forest.html)</sup>
 
 
 ## Conclusions and Recommendations
