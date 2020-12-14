@@ -9,6 +9,8 @@
 - [Executive Summary](#Executive-Summary)
     - [Methods](#Methods)
     - [Models](#Model)
+      - [Random Survival Forests](#Random-Survival_Forests)
+      - [DeepSurv](#DeepSurv)
     - [Model Training](#Model-Training)
     - [Feature Importance](#Feature-Importance)
 - [Conclusions and Recommendations](#Conclusions-and-Recommendations)
@@ -69,17 +71,25 @@ Using SQLite, most recent transplant follow-up records were isolated from the Ki
 
 Data cleaning and initial feature selection was performed in python using `pandas`, `scikit-learn`, `numpy`, and `imblearn`. Manual removal of features pertaining to pancreatic transplants, those unavailable prior to transplant, those pertaining to or utilizing race/ethnicity (eg; GFR), and those leaking graft survival information was performed. The dataframe was then filtered for features containing ≤ 10% null values. The final dataframe contained 102,480 transplant records.
 
-Numeric and categorical features were separated into distinct dataframes for initial feature selection. `RandomUnderSampler` was used to balance the graft failure and survival classes in order to perform ANOVA and chi-square tests on numeric and categorical features, respectively. The top 30 of 38 numeric and top 70 of 1677 features using `SelectKBest` were utilized for model tuning an further feature selection using a [Random Survival Forest](https://www.semanticscholar.org/paper/Random-survival-forests-Ishwaran-Kogalur/9ee2d6a8de063e2621eebc620b9d9d3d8a380374) model.
+Numeric and categorical features were separated into distinct dataframes for initial feature selection. `RandomUnderSampler` was used to balance the graft failure and survival classes in order to perform ANOVA and chi-square tests on numeric and categorical features, respectively. The top 30 of 38 numeric and top 70 of 1677 features using `SelectKBest` were utilized for model tuning and further feature selection using a Random Survival Forests model.<sup>[6]((https://www.semanticscholar.org/paper/Random-survival-forests-Ishwaran-Kogalur/9ee2d6a8de063e2621eebc620b9d9d3d8a380374)</sup>
 
 
 #### Models
 
+##### Random Survival Forests
+Random Survival Forests was chosen over the original Cox regression model for the ability to avoid the proportional hazards constraint while maintaining interpretability.<sup>[7](https://humboldt-wi.github.io/blog/research/information_systems_1920/group2_survivalanalysis/#rsf)</sup> The model computes a random forest using the log-rank test as the splitting criterion. The cumulative hazard of the leaf nodes in each tree are calculated and averaged in the following ensemble.<sup>[7](https://humboldt-wi.github.io/blog/research/information_systems_1920/group2_survivalanalysis/#rsf)</sup>
+
+##### DeepSurv
+
+DeepSurv is a Cox Proportional Hazards deep neural network.<sup>[8](https://bmcmedresmethodol.biomedcentral.com/articles/10.1186/s12874-018-0482-1)</sup> It works by estimating each individual’s effect on their hazard rates with respect to parametrized weights of the network<sup>[7](https://humboldt-wi.github.io/blog/research/information_systems_1920/group2_survivalanalysis/#rsf)</sup>. After feature importances were determined from Random Survival Forests using `PermutationImportance`, features with non-zero weights were eliminated and the 33 remaining features were used in a DeepSurv model to attempt to improve predictive accuracy.
 
 
 #### Model Training
+Random Survival Forests training and hyperparameter tuning was performed on Google AI Platform using the set of 100 features selected by initial statistical analysis.
 
 
 #### Feature Importance
+The `PermutationImportance`
 
 
 ## Conclusions and Recommendations
