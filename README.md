@@ -1,10 +1,9 @@
 # Removing Race from the Kidney Donor Risk Index
 
  ## Contents:
-
-- [Problem Statement](#Problem-Statement)  
 - [Background](#Background)
     - [Limitations of the Original Model](#Limitations-of-the-Original-Model)
+- [Problem Statement](#Problem-Statement)  
 - [Data](#Data)
 - [Executive Summary](#Executive-Summary)
     - [Methods](#Methods)
@@ -16,29 +15,9 @@
     - [Model Performance](#Model-Performance)
 - [Conclusions and Future Directions](#Conclusions-and-Future-Directions)
 
-
-
-## Problem Statement
-
-The aim of this project is to create a new and improved Kidney Donor Risk Index by:
- - Eliminating the race-adjustment for Black kidney donors
- - Redefining graft failure using death censorship
- - Using a combination of machine learning techniques to isolate important predictive variables and improve predictive accuracy
-
-
-
 ## Background
-The Kidney Donor Risk Index is a prognostic algorithm developed by Rao et al. (2009) and used by physicians to aid in making decisions regarding kidney allocation for transplants.<sup>[1](https://journals.lww.com/transplantjournal/Fulltext/2009/07270/A_Comprehensive_Risk_Quantification_Score_for.13.aspx)</sup> The original paper utilized Cox Regression to model the risk of graft failure or death using 69,440 transplant records from first-time, kidney-only, deceased donor adult transplants occurring between 1995-2005.<sup>[1](https://journals.lww.com/transplantjournal/Fulltext/2009/07270/A_Comprehensive_Risk_Quantification_Score_for.13.aspx)</sup> The KDRI<sub>full</sub> includes 13 donor, recipient, and transplant factors found to predict the risk of graft failure or death based on this model. The KDRI<sub>donor-only</sub> was adapted from the KDRI<sub>full</sub>, and includes the 10 following donor-only characteristics known prior to transplant:
-- Age
-- Weight
-- Height
-- Ethnicity/Race
-- History of Hypertension
-- History of Diabetes
-- Cause of Death
-- Serum Creatinine
-- Hepatitis C Virus
-- Donation after Circulatory Death (DCD) criteria<sup>[2](https://journals.lww.com/transplantjournal/Fulltext/2018/01000/Validation_of_the_Prognostic_Kidney_Donor_Risk.29.aspx)</sup>
+The Kidney Donor Risk Index is a prognostic algorithm developed by Rao et al. (2009) and used by physicians to aid in making decisions regarding kidney allocation for transplants.<sup>[1](https://journals.lww.com/transplantjournal/Fulltext/2009/07270/A_Comprehensive_Risk_Quantification_Score_for.13.aspx)</sup> The original paper utilized Cox Regression to model the risk of graft failure or death using 69,440 transplant records from first-time, kidney-only, deceased donor adult transplants occurring between 1995-2005.<sup>[1](https://journals.lww.com/transplantjournal/Fulltext/2009/07270/A_Comprehensive_Risk_Quantification_Score_for.13.aspx)</sup> The KDRI<sub>full</sub> includes 13 donor, recipient, and transplant factors found to predict the risk of graft failure or death based on this model.
+The KDRI<sub>donor-only</sub> was adapted from the KDRI<sub>full</sub>, and includes the 10 following donor-only characteristics known prior to transplant: Age, Weight, Height, Ethnicity/Race, History of Hypertension, History of Diabetes, Cause of Death, Serum Creatinine, Hepatitis C Virus Serology, Donation after Circulatory Death (DCD) criteria<sup>[2](https://journals.lww.com/transplantjournal/Fulltext/2018/01000/Validation_of_the_Prognostic_Kidney_Donor_Risk.29.aspx)</sup> The KDRI<sub>donor-only</sub> is used by clinicians to make decisions regarding kidney allocation for transplant because of its simplified number of inputs and similar accuracy compared to the KDRI<sub>full</sub>.
 
 ### Limitations of the Original Model
 Though the KDRI has been praised for its granularity compared to the previous Extended Criteria Donor versus Standard Criteria Donor dichotomy, the model and methodology of the original study have substantial limitations.
@@ -50,15 +29,22 @@ Worse still, use of race in the KDRI may exacerbate existing inequity by shrinki
 
 
 ##### 2. Predictive Outcome
-Though the KDRI is widely understood to predict the risk of graft failure for a particular donor kidney, the original study defined graft failure as return to dialysis, retransplant, or death, without regard to cause of death.<sup>[1](https://journals.lww.com/transplantjournal/Fulltext/2009/07270/A_Comprehensive_Risk_Quantification_Score_for.13.aspx)</sup> This approach reduces the baseline predictive value of the KDRI, and calls the association between the identified transplant characteristics and graft failure into question.
+Though the KDRI is widely understood to predict the risk of graft failure for a particular donor kidney, the original study defined graft failure as return to dialysis, retransplant, or death, without regard to cause of death.<sup>[1](https://journals.lww.com/transplantjournal/Fulltext/2009/07270/A_Comprehensive_Risk_Quantification_Score_for.13.aspx)</sup> This approach reduces the baseline predictive value of the KDRI, and calls the association between the identified transplant characteristics and graft failure into question, since these characteristics may instead predict death unrelated to graft failure.
 
 ##### 3. Advancements in Transplant Medicine
 The original study included transplant data from 1995-2005, but advancements in transplant medicine in the past fifteen years have substantially improved graft survival.<sup>[4](https://journals.lww.com/transplantjournal/fulltext/2010/12270/Induction_Immunosuppression_Improves_Long_Term.43.aspx)</sup> <sup>[5](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5464785/)</sup> In light of these advancements, the KDRI should be reformulated using more recent patient data.
 
 
-## Data
-##### Standard Transplant Analysis and Research Files (STAR)
-As per the Organ Transplantation and Procurement Network (OPTN), "STAR files are limited datasets that contain patient-level information about transplant recipients, deceased and living donors, and waiting list candidates back to 10/1/1987."
+## Problem Statement
+
+The aim of this project is to create a new Kidney Graft Failure Prediction tool by:
+ - Eliminating the race-adjustment for Black kidney donors
+ - Redefining graft failure using death censorship
+ - Using a combination of machine learning techniques to isolate important predictive variables and improve predictive accuracy
+
+
+## Data: Standard Transplant Analysis and Research Files (STAR)
+As per the Organ Transplantation and Procurement Network (OPTN), "STAR files are limited datasets that contain patient-level information about transplant recipients, deceased and living donors, and waiting list candidates back to 10/1/1987." This dataset includes waiting list, transplant, donor, and follow-up records for heart, lung, liver, intestine, pancreas and kidney transplants, including multi-organ transplants.   
 
 In accordance with the OPTN Data Use Agreement, the de-identified patient-level data contained in the STAR database and used in the subsequent analysis and modeling are not available in this repository. You may request the data [here](https://optn.transplant.hrsa.gov/data/request-data/data-request-instructions/).
 
@@ -68,9 +54,9 @@ In accordance with the OPTN Data Use Agreement, the de-identified patient-level 
 
 
 #### Methods
-Using SQLite, most recent transplant follow-up records were isolated from the Kidney Follow-Up data table for each transplant record ID. The Kidney/Pancreas data table was filtered sequentially using the same exclusion criteria used in the original model.<sup>[1](https://journals.lww.com/transplantjournal/Fulltext/2009/07270/A_Comprehensive_Risk_Quantification_Score_for.13.aspx)</sup> Kidney/Pancreas, Deceased Donor, and Kidney Follow-Up data tables were then left-joined on Transplant ID from the Kidney/Pancreas data table, and the joined table was filtered for transplant dates occurring in or after 2005. Duplicate transplant records were removed using Python after exporting the data table as a csv.
+Using SQLite, most recent transplant follow-up records were isolated from the Kidney Follow-Up data table for each transplant record ID. The Kidney/Pancreas data table was filtered sequentially using the same exclusion criteria used in the original model.<sup>[1](https://journals.lww.com/transplantjournal/Fulltext/2009/07270/A_Comprehensive_Risk_Quantification_Score_for.13.aspx)</sup> Kidney/Pancreas, Deceased Donor, and Kidney Follow-Up data tables were combined on Transplant ID from the Kidney/Pancreas data table, and the combined table was filtered for transplant dates occurring in or after 2005. Duplicate transplant records were removed using Python after exporting the dataframe.
 
-Data cleaning and initial feature selection was performed in python using `pandas`, `scikit-learn`, `numpy`, and `imblearn`. Manual removal of features pertaining to pancreatic transplants, those unavailable prior to transplant, those pertaining to or utilizing race/ethnicity (eg; GFR), and those leaking graft survival information was performed. The dataframe was then filtered for features containing ≤ 10% null values. The final dataframe contained 102,480 transplant records.
+Data cleaning and initial feature selection was performed in python using `pandas`, `scikit-learn`, `numpy`, and `imblearn`. Removal of features pertaining to pancreatic transplants, those unavailable prior to transplant, those pertaining to or utilizing race/ethnicity (e.g. GFR), and those leaking graft survival information was performed. The dataframe was then filtered for features containing ≥ 90% valid data. The final dataframe contained 102,480 transplant records.
 
 Numeric and categorical features were separated into distinct dataframes for initial feature selection. `RandomUnderSampler` was used to balance the graft failure and survival classes in order to perform ANOVA and chi-square tests on numeric and categorical features, respectively. The top 30 of 38 numeric and top 70 of 1677 features using `SelectKBest` were utilized for model tuning and further feature selection using a Random Survival Forests model.<sup>[6](https://www.semanticscholar.org/paper/Random-survival-forests-Ishwaran-Kogalur/9ee2d6a8de063e2621eebc620b9d9d3d8a380374)</sup>
 
