@@ -91,7 +91,11 @@ Random Survival Forests training and hyperparameter tuning was performed on Goog
 The hyperparameter optimization metric was Harrell's Concordance Index. The optimal concordance index value was 0.621 with parameters of `n_estimators` = 300, `min_sample_split` = 0.05, and `min_samples_leaf` = 0.05.
 
 #### Feature Importance
-Feature importance was obtained using the `eli5` `PermutationImportance` method, as outlined in the `scikit-survival` Random Survival Forests documentation.<sup>[11](https://scikit-survival.readthedocs.io/en/latest/user_guide/random-survival-forest.html)</sup>
+Feature importance was obtained using the `eli5` `PermutationImportance` method, as outlined in the `scikit-survival` Random Survival Forests documentation.<sup>[11](https://scikit-survival.readthedocs.io/en/latest/user_guide/random-survival-forest.html)</sup> The top 26 features and their weights are shown below. These features were selected for DeepSurv. 
+
+
+
+![Top 33 features](images/feature_importances.png)
 
 
 #### Model Performance
