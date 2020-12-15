@@ -23,7 +23,7 @@
 The aim of this project is to create a new and improved Kidney Donor Risk Index by:
  - Eliminating the race-adjustment for Black kidney donors
  - Redefining graft failure using death censorship
- - Utilizing a combination of novel machine learning techniques to isolate important predictive variables and improve predictive accuracy
+ - Using a combination of machine learning techniques to isolate important predictive variables and improve predictive accuracy
 
 
 
