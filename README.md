@@ -8,8 +8,8 @@
 - [Data](#Data)
 - [Executive Summary](#Executive-Summary)
     - [Methods](#Methods)
-    - [Models](#Model)
-      - [Random Survival Forests](#Random-Survival_Forests)
+    - [Models](#Models)
+      - [Random Survival Forests](#Random-Survival-Forests)
       - [DeepSurv](#DeepSurv)
     - [Model Training](#Model-Training)
     - [Feature Importance](#Feature-Importance)
@@ -121,4 +121,4 @@ Comparison of the Integrated Brier Score between models at 5 and 10 years post-t
 
 
 ## Conclusions and Future Directions
-This project definitively shows that eliminating the use of race and ethnicity in the KDRI does not have to come at the expense of predictive accuracy. Developing a better Kidney Donor Risk Index is not only feasible, but is necessary to prevent further inequity in kidney transplantation. The slightly improved predictive accuracy of DeepSurv shows the potential of deep learning to individualized risk calculations in medicine. 
+This project definitively shows that eliminating the use of race and ethnicity in the KDRI does not have to come at the expense of predictive accuracy. Developing a better Kidney Donor Risk Index is not only feasible, but is necessary to prevent further inequity in kidney transplantation. The slightly improved predictive accuracy of DeepSurv shows the potential of deep learning to individualized risk calculations in medicine.
