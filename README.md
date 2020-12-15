@@ -1,4 +1,4 @@
-# Removing Race from the Kidney Donor Risk Index
+# Eliminating the Use of Race in Kidney Graft Failure Risk Prediction
 
  ## Contents:
 - [Background](#Background)
@@ -77,8 +77,7 @@ Random Survival Forests training and hyperparameter tuning was performed on Goog
 The hyperparameter optimization metric was Harrell's Concordance Index. Harrell's concordance index measures whether for two random individuals, the individual with a higher estimated risk score has a shorter actual survival time. A concordance index of 1 would indicate perfect concordance of predictions.<sup>[9](https://scikit-survival.readthedocs.io/en/latest/api/generated/sksurv.metrics.concordance_index_censored.html)</sup> The optimal concordance index value was 0.621 with parameters of `n_estimators` = 300, `min_sample_split` = 0.05, and `min_samples_leaf` = 0.05.
 
 #### Feature Importance
-Feature importance was obtained using the `eli5` `PermutationImportance` method, as outlined in the `scikit-survival` Random Survival Forests documentation.<sup>[10](https://scikit-survival.readthedocs.io/en/latest/user_guide/random-survival-forest.html)</sup> The weights of the top 26 features are shown below. These features were selected for `DeepSurv`.
-
+Feature importance was obtained using the [`eli5` `PermutationImportance`](https://eli5.readthedocs.io/en/latest/blackbox/permutation_importance.html) method, as outlined in the `scikit-survival` Random Survival Forests documentation.<sup>[10](https://scikit-survival.readthedocs.io/en/latest/user_guide/random-survival-forest.html)</sup> The top 26 features had non-zero weights, and were selected for further modeling with `DeepSurv`. These features are shown below. 
 
 ![Top 26 features](images/feature_importances.png)
 
@@ -104,4 +103,6 @@ Comparison of the Integrated Brier Score between models at 5 and 10 years post-t
 
 
 ## Conclusions and Future Directions
+
+
 This project definitively shows that eliminating the use of race and ethnicity in the KDRI does not have to come at the expense of predictive accuracy. Developing a better Kidney Donor Risk Index is not only feasible, but is necessary to prevent further inequity in kidney transplantation. The slightly improved predictive accuracy of `DeepSurv` shows the potential of deep learning to individualized risk calculations in medicine.
