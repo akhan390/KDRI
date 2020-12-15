@@ -64,20 +64,20 @@ Numeric and categorical features were separated into distinct dataframes for ini
 #### Models
 
 ##### Random Survival Forests
-Random Survival Forests was chosen over the original Cox regression model for the ability to avoid the proportional hazards constraint while maintaining interpretability.<sup>[7](https://humboldt-wi.github.io/blog/research/information_systems_1920/group2_survivalanalysis/#rsf)</sup> The model computes a random forest using the log-rank test as the splitting criterion. The cumulative hazard of the leaf nodes in each tree are calculated and averaged in the following ensemble.<sup>[7](https://humboldt-wi.github.io/blog/research/information_systems_1920/group2_survivalanalysis/#rsf)</sup> The `scikit-survival` package was used for Random Survival Forest modeling and model evaluation.<sup>[8](https://scikit-survival.readthedocs.io/en/latest/)</sup>  
+Random Survival Forests was chosen over the original Cox regression model for the ability to avoid the proportional hazards constraint while maintaining interpretability.<sup>[7](https://humboldt-wi.github.io/blog/research/information_systems_1920/group2_survivalanalysis/#rsf)</sup> The model computes a random forest using the log-rank test as the splitting criterion. The cumulative hazard of the leaf nodes in each tree are calculated and averaged in the following ensemble.<sup>[7](https://humboldt-wi.github.io/blog/research/information_systems_1920/group2_survivalanalysis/#rsf)</sup> The [`scikit-survival`](https://scikit-survival.readthedocs.io/en/latest/) package was used for Random Survival Forest modeling and model evaluation.
 
 ##### DeepSurv
 
-DeepSurv is a Cox Proportional Hazards deep neural network.<sup>[9](https://bmcmedresmethodol.biomedcentral.com/articles/10.1186/s12874-018-0482-1)</sup> It works by estimating each individual’s effect on their hazard rates with respect to parametrized weights of the network<sup>[7](https://humboldt-wi.github.io/blog/research/information_systems_1920/group2_survivalanalysis/#rsf)</sup>. After determination of Random Survival Forests feature weights, features with non-zero weights were eliminated and the 33 remaining features were used in a DeepSurv model to attempt to improve predictive accuracy. The `CoxPH` method from the `Pycox` package was used for DeepSurv modeling and evaluation.<sup>[10](https://github.com/havakv/pycox#references)</sup>
-
+`DeepSurv` is a Cox Proportional Hazards deep neural network.<sup>[8](https://bmcmedresmethodol.biomedcentral.com/articles/10.1186/s12874-018-0482-1)</sup> It works by estimating each individual’s effect on their hazard rates with respect to parametrized weights of the network<sup>[7](https://humboldt-wi.github.io/blog/research/information_systems_1920/group2_survivalanalysis/#rsf)</sup>. After determination of Random Survival Forests feature weights, features with non-zero weights were eliminated and the 33 remaining features were used in a `DeepSurv` model to attempt to improve predictive accuracy. The `CoxPH` method from the [`Pycox`](https://github.com/havakv/pycox#references) package was used for `DeepSurv` modeling and evaluation.
+`
 
 #### Model Training
 Random Survival Forests training and hyperparameter tuning was performed on Google AI Platform using the set of 100 features selected by initial statistical analysis. Tuning parameters included `n_estimators` = {100, 200, 300}, `min_sample_split` = {0.05, 0.1}, `min_samples_leaf` = {0.05, 0.1}.
 
-The hyperparameter optimization metric was Harrell's Concordance Index. The optimal concordance index value was 0.621 with parameters of `n_estimators` = 300, `min_sample_split` = 0.05, and `min_samples_leaf` = 0.05.
+The hyperparameter optimization metric was Harrell's Concordance Index. Harrell's concordance index measures whether for two random individuals, the individual with a higher estimated risk score has a shorter actual survival time. A concordance index of 1 would indicate perfect concordance of predictions.<sup>[9](https://scikit-survival.readthedocs.io/en/latest/api/generated/sksurv.metrics.concordance_index_censored.html)</sup> The optimal concordance index value was 0.621 with parameters of `n_estimators` = 300, `min_sample_split` = 0.05, and `min_samples_leaf` = 0.05.
 
 #### Feature Importance
-Feature importance was obtained using the `eli5` `PermutationImportance` method, as outlined in the `scikit-survival` Random Survival Forests documentation.<sup>[11](https://scikit-survival.readthedocs.io/en/latest/user_guide/random-survival-forest.html)</sup> The weights of the top 26 features are shown below. These features were selected for DeepSurv.
+Feature importance was obtained using the `eli5` `PermutationImportance` method, as outlined in the `scikit-survival` Random Survival Forests documentation.<sup>[10](https://scikit-survival.readthedocs.io/en/latest/user_guide/random-survival-forest.html)</sup> The weights of the top 26 features are shown below. These features were selected for `DeepSurv`.
 
 
 ![Top 26 features](images/feature_importances.png)
@@ -86,12 +86,9 @@ Feature importance was obtained using the `eli5` `PermutationImportance` method,
 They are as follows: Donor Age, Recipient Age, Age waitlisted for transplant, Tranplant Year, Extended Criteria Donor, Donor History of Hypertension, Donor BUN, Donor Urine Infection, D Locus Mismatch, Cold Ischemic Time, Donor History of Cigarette Use, Distance between kidney and transplant center, Donor Human T-Lymphotrophic Virus, UNOS Region, Donor PO<sub>2</sub>, Recipient Creatinine, Recipient DR1 Antigen, Donor History of Diabetes, Donor Inotropic Support, Donor EBV Serostatus, Donor Mechanism of Death, Candidate DR1 Antigen from Waiting List, Recipient BMI, Donor Hematocrit, and Donor History of Other Drug Use.
 #### Model Performance
 
-Harrell's concordance index measures whether for two random individuals, the individual with a higher estimated risk score has a shorter actual survival time. A concordance index of 1 would indicate perfect concordance of predictions.<sup>[12](https://scikit-survival.readthedocs.io/en/latest/api/generated/sksurv.metrics.concordance_index_censored.html)</sup>
-
-
 Comparison of Harrell's concordance index between models.
 
-| KDRI<sub>full</sub> | KDRI<sub>donor-only</sub> | RSF   | DeepSurv |
+| KDRI<sub>full</sub> | KDRI<sub>donor-only</sub> | RSF   | `DeepSurv` |
 |---------------------|---------------------------|-------|----------|
 | 0.63                | 0.62                      | 0.62 | 0.64    |
 
@@ -99,7 +96,7 @@ The Integrated Brier score provides the mean squared error over the specified in
 
 Comparison of the Integrated Brier Score between models at 5 and 10 years post-transplant (not available for the KDRI).
 
-| Years post-transplant | RSF  | DeepSurv |
+| Years post-transplant | RSF  | `DeepSurv` |
 | --------------------- | ---- | -------- |
 | 5                     | 0.05 | 0.05     |
 | 10                    | 0.12 | 0.15     |
@@ -107,4 +104,4 @@ Comparison of the Integrated Brier Score between models at 5 and 10 years post-t
 
 
 ## Conclusions and Future Directions
-This project definitively shows that eliminating the use of race and ethnicity in the KDRI does not have to come at the expense of predictive accuracy. Developing a better Kidney Donor Risk Index is not only feasible, but is necessary to prevent further inequity in kidney transplantation. The slightly improved predictive accuracy of DeepSurv shows the potential of deep learning to individualized risk calculations in medicine.
+This project definitively shows that eliminating the use of race and ethnicity in the KDRI does not have to come at the expense of predictive accuracy. Developing a better Kidney Donor Risk Index is not only feasible, but is necessary to prevent further inequity in kidney transplantation. The slightly improved predictive accuracy of `DeepSurv` shows the potential of deep learning to individualized risk calculations in medicine.
