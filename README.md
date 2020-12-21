@@ -87,29 +87,27 @@ They are as follows: Donor Age, Recipient Age, Age waitlisted for transplant, Tr
 
 
 ##### Concordance Index
-Comparison of Harrell's concordance index between models.
+The table below compares Harrell's concordance index between models.
 
 | KDRI<sub>full</sub> | KDRI<sub>donor-only</sub> | RSF   | `DeepSurv` |
 |---------------------|---------------------------|-------|----------|
 | 0.63                | 0.62                      | 0.62 | 0.64    |
 
-
+The predictive accuracy of the KDRI<sub>full</sub> and KDRI<sub>donor-only</sub> are modest. The Random Survival Forests Model with 100 features had equal predictive accuracy to the KDRI<sub>donor-only</sub>, while `DeepSurv` with 26 features selected using `PermutationImportance` shows a slight improvement over both KDRI<sub>full</sub> and KDRI<sub>donor-only</sub>.
 
 
 ##### Integrated Brier Score
-The Integrated Brier score provides the mean squared error over the specified interval of time.
-
-Comparison of the Integrated Brier Score between models at 5 and 10 years post-transplant (not available for the KDRI).
+The Integrated Brier score provides the mean squared error over the specified interval of time. The table below compares the Integrated Brier Score between models at 5 and 10 years post-transplant.  
 
 | Years post-transplant | RSF  | `DeepSurv` |
 | --------------------- | ---- | -------- |
 | 5                     | 0.05 | 0.05     |
 | 10                    | 0.12 | 0.15     |
 
-
+The predictive error is low and equal between models at 5 years post-transplant, but `DeepSurv` performs slightly worse than Random Survival Forests at 10 years post-transplant. This metric is not available in the original paper for the KDRI<sub>full</sub> and KDRI<sub>donor-only</sub>. Further analyses should be conducted to compare long-term predictive accuracy to the original model.
 ## Conclusions and Future Directions
 
 
 The results of this project show that eliminating the use of race and ethnicity in a predictive algorithm for kidney graft failure does not come at the expense of predictive accuracy. Developing a better kidney graft failure risk calculator is not only feasible, but is necessary to prevent further inequity in kidney transplantation. The improved predictive accuracy of `DeepSurv` shows the potential of deep learning to individualized risk calculations in medicine.
 
-Though this model utilizes 26 features, with the exception of Cold Ischemic Time these features are readily available in the UNOS transplant database prior to transplant. Cold Ischemic Time can be estimated as in the KDRI<sub>full</sub>.  Implementing a new algorithm for kidney graft failure risk prediction directly through UNOS would allow for easy implementation.
+Though this model utilizes 26 features, with the exception of Cold Ischemic Time these features are readily available in the UNOS transplant database prior to transplant. Cold Ischemic Time can be estimated.  Implementing a new algorithm for kidney graft failure risk prediction directly through UNOS would allow for easy implementation.
