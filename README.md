@@ -4,7 +4,7 @@
 - [Background](#Background)
     - [Limitations of the Original Model](#Limitations-of-the-Original-Model)
 - [Problem Statement](#Problem-Statement)  
-- [Data](#Data:-Standard-Transplant-Analysis-and-Research-Files-(STAR))
+- [Data](Data: Standard Transplant Analysis and Research Files)
 - [Executive Summary](#Executive-Summary)
     - [Methods](#Methods)
     - [Models](#Models)
@@ -17,7 +17,7 @@
 
 ## Background
 The Kidney Donor Risk Index is a prognostic algorithm developed by Rao et al. (2009) and used by physicians to aid in making decisions regarding kidney allocation for transplants.<sup>[1](https://journals.lww.com/transplantjournal/Fulltext/2009/07270/A_Comprehensive_Risk_Quantification_Score_for.13.aspx)</sup> The original paper utilized Cox Regression to model the risk of graft failure or death using 69,440 transplant records from first-time, kidney-only, deceased donor adult transplants occurring between 1995-2005.<sup>[1](https://journals.lww.com/transplantjournal/Fulltext/2009/07270/A_Comprehensive_Risk_Quantification_Score_for.13.aspx)</sup> The KDRI<sub>full</sub> includes 13 donor, recipient, and transplant factors found to predict the risk of graft failure or death based on this model.
-The KDRI<sub>donor-only</sub> was adapted from the KDRI<sub>full</sub>, and includes the 10 following donor-only characteristics known prior to transplant: Age, Weight, Height, Ethnicity/Race, History of Hypertension, History of Diabetes, Cause of Death, Serum Creatinine, Hepatitis C Virus Serology, and Donation after Circulatory Death (DCD) criteria<sup>[2](https://journals.lww.com/transplantjournal/Fulltext/2018/01000/Validation_of_the_Prognostic_Kidney_Donor_Risk.29.aspx)</sup> The KDRI<sub>donor-only</sub> is used by clinicians to make decisions regarding kidney allocation for transplant because of its simplified number of inputs and similar accuracy compared to the KDRI<sub>full</sub>.
+The KDRI<sub>donor-only</sub> was adapted from the KDRI<sub>full</sub>, and includes the 10 following donor-only characteristics known prior to transplant: Age, Weight, Height, Ethnicity/Race, History of Hypertension, History of Diabetes, Cause of Death, Serum Creatinine, Hepatitis C Virus Serology, and Donation after Circulatory Death (DCD) criteria.<sup>[2](https://journals.lww.com/transplantjournal/Fulltext/2018/01000/Validation_of_the_Prognostic_Kidney_Donor_Risk.29.aspx)</sup> The KDRI<sub>donor-only</sub> is used by clinicians to make decisions regarding kidney allocation for transplant because of its simplified number of inputs and similar accuracy compared to the KDRI<sub>full</sub>.
 
 ### Limitations of the Original Model
 Though the KDRI has been praised for its granularity compared to the previous Extended Criteria Donor versus Standard Criteria Donor dichotomy, the model and methodology of the original study have substantial limitations.<sup>[3](https://academic.oup.com/ndt/article/30/8/1285/2324817?login=true)</sup>
@@ -43,7 +43,7 @@ The aim of this project is to create a new Kidney Graft Failure Prediction tool 
  - Using a combination of machine learning techniques to isolate important predictive variables and improve predictive accuracy
 
 
-## Data: Standard Transplant Analysis and Research Files (STAR)
+## Data: Standard Transplant Analysis and Research Files 
 As per the Organ Transplantation and Procurement Network (OPTN), "STAR files are limited datasets that contain patient-level information about transplant recipients, deceased and living donors, and waiting list candidates back to 10/1/1987." This dataset includes waiting list, transplant, donor, and follow-up records for heart, lung, liver, intestine, pancreas and kidney transplants, including multi-organ transplants.   
 
 In accordance with the OPTN Data Use Agreement, the de-identified patient-level data contained in the STAR database and used in the subsequent analysis and modeling are not available in this repository. You may request the data [here](https://optn.transplant.hrsa.gov/data/request-data/data-request-instructions/).
