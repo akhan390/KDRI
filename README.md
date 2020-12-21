@@ -54,7 +54,7 @@ In accordance with the OPTN Data Use Agreement, the de-identified patient-level 
 
 
 #### Methods
-Using SQLite, most recent transplant follow-up records were isolated from the Kidney Follow-Up data table for each transplant record ID. The Kidney/Pancreas data table was filtered sequentially using the same exclusion criteria used in the original model.<sup>[1](https://journals.lww.com/transplantjournal/Fulltext/2009/07270/A_Comprehensive_Risk_Quantification_Score_for.13.aspx)</sup> Kidney/Pancreas, Deceased Donor, and Kidney Follow-Up data tables were combined on Transplant ID from the Kidney/Pancreas data table, and the combined table was filtered for transplant dates occurring in or after 2005. Duplicate transplant records were removed using Python after exporting the dataframe.
+Using SQLite, most recent transplant follow-up records were isolated from the Kidney Followup data table for each transplant record ID. The Kidpan data table was filtered sequentially using the same exclusion criteria used in the original model.<sup>[1](https://journals.lww.com/transplantjournal/Fulltext/2009/07270/A_Comprehensive_Risk_Quantification_Score_for.13.aspx)</sup> Kidpan data, Deceased Donor, and Kidney Followup data tables were combined on Transplant ID from the Kidpan data table, and the combined table was filtered for transplant dates occurring in or after 2005. Duplicate transplant records were removed using Python after exporting the dataframe.
 
 Data cleaning and initial feature selection was performed in python using `pandas`, `scikit-learn`, `numpy`, and `imblearn`. Removal of features pertaining to pancreatic transplants, those unavailable prior to transplant, those pertaining to or utilizing race/ethnicity (e.g. GFR), and those leaking graft survival information was performed. The dataframe was then filtered for features containing ≥ 90% valid data. The final dataframe contained 102,480 transplant records.
 
@@ -72,7 +72,7 @@ Random Survival Forests was chosen over the original Cox regression model for th
 `
 
 #### Model Training
-Random Survival Forests training and hyperparameter tuning was performed on Google AI Platform using the set of 100 features selected by initial statistical analysis. Tuning parameters included `n_estimators` = {100, 200, 300}, `min_sample_split` = {0.05, 0.1}, `min_samples_leaf` = {0.05, 0.1}.
+Random Survival Forests training and hyperparameter tuning was performed on [Google AI Platform](https://console.cloud.google.com/ai-platform/dashboard) using the set of 100 features selected by initial statistical analysis. Tuning parameters included `n_estimators` = {100, 200, 300}, `min_sample_split` = {0.05, 0.1}, `min_samples_leaf` = {0.05, 0.1}.
 
 The hyperparameter optimization metric was Harrell's Concordance Index. Harrell's concordance index measures whether for two random individuals, the individual with a higher estimated risk score has a shorter actual survival time. A concordance index of 1 would indicate perfect concordance of predictions.<sup>[9](https://scikit-survival.readthedocs.io/en/latest/api/generated/sksurv.metrics.concordance_index_censored.html)</sup> The optimal concordance index value was 0.621 with parameters of `n_estimators` = 300, `min_sample_split` = 0.05, and `min_samples_leaf` = 0.05.
 
@@ -82,16 +82,22 @@ Feature importance was obtained using the [`eli5` `PermutationImportance`](https
 ![Top 26 features](images/feature_importances.png)
 
 
-They are as follows: Donor Age, Recipient Age, Age waitlisted for transplant, Tranplant Year, Extended Criteria Donor, Donor History of Hypertension, Donor BUN, Donor Urine Infection, D Locus Mismatch, Cold Ischemic Time, Donor History of Cigarette Use, Distance between kidney and transplant center, Donor Human T-Lymphotrophic Virus, UNOS Region, Donor PO<sub>2</sub>, Recipient Creatinine, Recipient DR1 Antigen, Donor History of Diabetes, Donor Inotropic Support, Donor EBV Serostatus, Donor Mechanism of Death, Candidate DR1 Antigen from Waiting List, Recipient BMI, Donor Hematocrit, and Donor History of Other Drug Use.
+They are as follows: Donor Age, Recipient Age, Age waitlisted for transplant, Tranplant Year, Extended Criteria Donor, Donor History of Hypertension, Donor BUN, Donor Urine Infection, D Locus Mismatch, Cold Ischemic Time (estimated), Donor History of Cigarette Use, Distance between kidney and transplant center, Donor Human T-Lymphotrophic Virus, UNOS Region, Donor PO<sub>2</sub>, Recipient Creatinine, Recipient DR1 Antigen, Donor History of Diabetes, Donor Inotropic Support, Donor EBV Serostatus, Donor Mechanism of Death, Candidate DR1 Antigen from Waiting List, Recipient BMI, Donor Hematocrit, and Donor History of Other Drug Use.
 #### Model Performance
 
+
+##### Concordance Index
 Comparison of Harrell's concordance index between models.
 
 | KDRI<sub>full</sub> | KDRI<sub>donor-only</sub> | RSF   | `DeepSurv` |
 |---------------------|---------------------------|-------|----------|
 | 0.63                | 0.62                      | 0.62 | 0.64    |
 
-The Integrated Brier score provides the mean squared error over the specified interval of time
+
+
+
+##### Integrated Brier Score
+The Integrated Brier score provides the mean squared error over the specified interval of time.
 
 Comparison of the Integrated Brier Score between models at 5 and 10 years post-transplant (not available for the KDRI).
 
@@ -99,10 +105,11 @@ Comparison of the Integrated Brier Score between models at 5 and 10 years post-t
 | --------------------- | ---- | -------- |
 | 5                     | 0.05 | 0.05     |
 | 10                    | 0.12 | 0.15     |
-|                       |      |          |
 
 
 ## Conclusions and Future Directions
 
 
 The results of this project show that eliminating the use of race and ethnicity in a predictive algorithm for kidney graft failure does not come at the expense of predictive accuracy. Developing a better kidney graft failure risk calculator is not only feasible, but is necessary to prevent further inequity in kidney transplantation. The improved predictive accuracy of `DeepSurv` shows the potential of deep learning to individualized risk calculations in medicine.
+
+Though this model utilizes 26 features, with the exception of Cold Ischemic Time these features are readily available in the UNOS transplant database prior to transplant. Cold Ischemic Time can be estimated as in the KDRI<sub>full</sub>.  Implementing a new algorithm for kidney graft failure risk prediction directly through UNOS would allow for easy implementation.
