@@ -77,7 +77,7 @@ Random Survival Forests training and hyperparameter tuning was performed on [Goo
 The hyperparameter optimization metric was Harrell's Concordance Index. Harrell's concordance index measures whether for two random individuals, the individual with a higher estimated risk score has a shorter actual survival time. A concordance index of 1 would indicate perfect concordance of predictions.<sup>[10](https://scikit-survival.readthedocs.io/en/latest/api/generated/sksurv.metrics.concordance_index_censored.html)</sup> The optimal concordance index value was 0.621 with parameters of `n_estimators` = 300, `min_sample_split` = 0.05, and `min_samples_leaf` = 0.05.
 
 #### Feature Importance
-Feature importance was obtained using the [`eli5` `PermutationImportance`](https://eli5.readthedocs.io/en/latest/blackbox/permutation_importance.html) method, as outlined in the `scikit-survival` Random Survival Forests documentation.<sup>[11](https://scikit-survival.readthedocs.io/en/latest/user_guide/random-survival-forest.html)</sup> The top 26 features had non-zero weights, and were selected for further modeling with `DeepSurv`. These features are shown below.
+Feature importance was obtained using the [`eli5` `PermutationImportance`](https://eli5.readthedocs.io/en/latest/blackbox/permutation_importance.html) method, as outlined in the `scikit-survival` Random Survival Forests documentation.<sup>[11](https://scikit-survival.readthedocs.io/en/latest/user_guide/random-survival-forest.html)</sup> The top 26 features had non-zero weights, and were selected for further modeling with `DeepSurv`. These features and their weights are shown below.
 
 
 
