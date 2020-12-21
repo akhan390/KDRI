@@ -4,7 +4,7 @@
 - [Background](#Background)
     - [Limitations of the Original Model](#Limitations-of-the-Original-Model)
 - [Problem Statement](#Problem-Statement)  
-- [Data](#Data: Standard Transplant Analysis and Research Files)
+- [Data](#Data:-Standard-Transplant-Analysis-and-Research-Files)
 - [Executive Summary](#Executive-Summary)
     - [Methods](#Methods)
     - [Models](#Models)
