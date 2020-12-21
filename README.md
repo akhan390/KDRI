@@ -4,7 +4,7 @@
 - [Background](#Background)
     - [Limitations of the Original Model](#Limitations-of-the-Original-Model)
 - [Problem Statement](#Problem-Statement)  
-- [Data](#Data:-Standard-Transplant-Analysis-and-Research-Files)
+- [Data](#Data)
 - [Executive Summary](#Executive-Summary)
     - [Methods](#Methods)
     - [Models](#Models)
@@ -43,7 +43,8 @@ The aim of this project is to create a new Kidney Graft Failure Prediction tool 
  - Using a combination of machine learning techniques to isolate important predictive variables and improve predictive accuracy
 
 
-## Data: Standard Transplant Analysis and Research Files
+## Data
+#### Standard Transplant Analysis and Research Files (STAR)
 As per the Organ Transplantation and Procurement Network (OPTN), "STAR files are limited datasets that contain patient-level information about transplant recipients, deceased and living donors, and waiting list candidates back to 10/1/1987." This dataset includes waiting list, transplant, donor, and follow-up records for heart, lung, liver, intestine, pancreas and kidney transplants, including multi-organ transplants.   
 
 In accordance with the OPTN Data Use Agreement, the de-identified patient-level data contained in the STAR database and used in the subsequent analysis and modeling are not available in this repository. You may request the data [here](https://optn.transplant.hrsa.gov/data/request-data/data-request-instructions/).
