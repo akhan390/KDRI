@@ -111,6 +111,6 @@ The predictive error is low and equal between models at 5 years post-transplant,
 ## Conclusions and Future Directions
 
 
-The results of this project show that eliminating the use of race and ethnicity in a predictive algorithm for kidney graft failure does not come at the expense of predictive accuracy. Developing a better kidney graft failure risk calculator is not only feasible, but is necessary to prevent further inequity in kidney transplantation. The improved predictive accuracy of `DeepSurv` shows the potential of deep learning to individualized risk calculations in medicine.
+The results of this project show that eliminating the use of race and ethnicity in a predictive algorithm for kidney graft failure does not come at the expense of predictive accuracy. Developing a better kidney graft failure risk calculator is not only feasible, but is necessary to prevent further inequity in kidney transplantation. The improved predictive accuracy of `DeepSurv` shows the potential of deep learning to produce individualized risk calculations in medicine.
 
-Though this model utilizes 26 features, with the exception of Cold Ischemic Time these features are readily available in the UNOS transplant database prior to transplant. Cold Ischemic Time can be estimated.  Implementing a new algorithm for kidney graft failure risk prediction directly through UNOS would allow for easy implementation.
+Though this model utilizes 26 features, with the exception of Cold Ischemic Time these features are readily available in the UNOS transplant database prior to transplant. Cold Ischemic Time can be estimated, as in the KDRI<sub>full</sub>.  Implementing a new algorithm for kidney graft failure risk prediction directly through UNOS would allow for easy implementation.
