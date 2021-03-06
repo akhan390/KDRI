@@ -23,11 +23,11 @@ parser.add_argument('--n_estimators',
                         type=int,
                         default=100,
                         help='The number of trees in the forest')
-parser.add_argument('--min_samples_split',  # Specified in the config file
+parser.add_argument('--min_samples_split', 
                         type=float,
                         default=0.0,
                         help='minimum numer of samples required to split an internal node')
-parser.add_argument('--min_samples_leaf',  # Specified in the config file
+parser.add_argument('--min_samples_leaf', 
                         type=float,
                         default=0.0,
                         help='The minimum number of samples required to be at a leaf node')
